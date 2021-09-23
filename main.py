@@ -19,7 +19,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 # CONNECT TO DB use os.environ.get('DATABASE_URL', "sqlite:///blog.db") if running in local.
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', "sqlite:///blog.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -64,8 +64,8 @@ class Comment(db.Model):
     text = db.Column(db.Text, nullable=False)
 
 
-# # Call this create_all function once.
-# db.create_all()
+# Call this create_all function once.
+db.create_all()
 
 #gravatar initialization
 gravatar = Gravatar(app,
